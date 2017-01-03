@@ -1,0 +1,12 @@
+YouCompleteMe
+setcolours.vim
+tagbar
+vim-airline
+vim-colorschemes
+vim-misc
+vim-snippets
+nerdtree
+taboo.vim
+vim-airline-themes
+vim-fugitive
+vim-notes
