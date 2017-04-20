@@ -8,6 +8,8 @@ if has('gui_running')
     set guifont=Cousine\ Bold\ 9
 endif
 
+set enc=utf-8
+set fileencoding=utf-8
 set expandtab
 set shiftwidth=4
 set tabstop=4
@@ -50,21 +52,21 @@ nnoremap <C-F2> :tabnew \| :read !make <CR>
 "nnoremap <S-F3> :!java -agentlib:jdwp=transport=dt_shmem,server=y,suspend=n "CSdict"
 nnoremap <F3> :!gcc -S % <CR>
 nnoremap <S-F3> :call delete(expand("%")) \| bdelete!
-nnoremap <F4> :!python % <CR>
-nnoremap <S-F4> :vnew \| :read !python # <CR>
-nnoremap <C-F4> :tabnew \| :read !python # <CR>
+" nnoremap <F4> :!python % <CR>
+" nnoremap <S-F4> :vnew \| :read !python # <CR>
+" nnoremap <C-F4> :tabnew \| :read !python # <CR>
 
+nnoremap <F4> :!python -m tests.service.run_tests <CR>
+
+nnoremap <S-F4> :vnew \| :set buftype=nofile \| :set bufhidden=hide \| :set noswapfile \| :read !python -m tests.service.run_tests <CR>
+
+nnoremap <C-F4> :tabnew \| :set buftype=nofile \| :set bufhidden=hide \| :set noswapfile \| :read !python -m tests.service.run_tests <CR>
 
 " ============== "
 "    Pathogen
 " ============== "
 execute pathogen#infect()
 execute pathogen#helptags()
-
-" ============== "
-"    Vim-Notes
-" ============== "
-let g:notes_directories = ['~/uni/fourth_year/cpsc_422/notes','~/uni/fourth_year/cpsc_312/notes', '~/uni/fourth_year/cpsc_340/notes', '~/uni/fourth_year/cpsc_415/notes']
 
 " ============== "
 "    NERDTree
@@ -92,3 +94,15 @@ let g:taboo_tab_format = "[%N] %f"
 "   UltiSnips
 " ============== "
 "let g:UltiSnipsExpandTrigger = <F8>
+
+" ============== "
+"      ale
+" ============== "
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_save = 1
+
+
+" ============== "
+"      fzf
+" ============== "
+set rtp+=/usr/local/opt/fzf
