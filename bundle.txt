@@ -6,3 +6,13 @@ vim-airline
 vim-airline-themes
 vim-coffee-script
 youcompleteme
+[0m[01;34male[0m
+[01;34mnerdtree[0m
+[01;34msupertab[0m
+[01;34mtaboo.vim[0m
+[01;34mtagbar[0m
+[01;34mvim-airline[0m
+[01;34mvim-airline-themes[0m
+[01;34mvim-coffee-script[0m
+[01;34mvim-elixir[0m
+[01;34mvim-fugitive[0m
