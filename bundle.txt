@@ -1,11 +1,3 @@
-ale
-nerdtree
-taboo.vim
-tagbar
-vim-airline
-vim-airline-themes
-vim-coffee-script
-youcompleteme
 [0m[01;34male[0m
 [01;34mnerdtree[0m
 [01;34msupertab[0m
