@@ -1,0 +1,204 @@
+=====
+Kernel Recompile
+=====
+1. As su, cd /usr/src/linux and make menuconfig
+2. Save as .config
+3. Exit
+4. make && make modules_install
+5. make install
+6. Restart
+
+=====
+i3
+=====
+To force kill i3: Ctrl-Alt-F1, Ctrl-C
+Config file: ~/.i3/config 
+Move workspace to other monitor: i3-msg move workspace to output up/down/left/right
+Reload .Xresources: xrdb .Xresources
+check font order: fc-match -s $font
+
+
+====
+Package Management/Emerge & Install
+====
+
+Update: 
+USE var location: /etc/portage/make.conf
+After USE var update: emerge -aD --newuse --deep @world
+Exclude package from compilation: --exclude package_name
+Find where sources of program stored: whereis $program
+Find which source of files being used: which $program
+Learn about a USE Flag: euse -i $flag
+See what is installed: equery b $program
+
+
+Update: sudo emerge -a --update --deep --with-bdeps=y @world
+Update: sudo emerge -auDU --keep-going --with-bdeps=y @world
+
+Update Configs: sudo cfg-update -u
+
+See emerge history: sudo qlop -l
+
+=====
+Processes
+=====
+View all running proccesses: top
+View all running proccesses for the current user: ps
+View all running proccesses: ps aux
+View all in a tree view: ps axjf
+Get proccess id (pid) of a process: pgrep $name
+
+kill process by pid: kill $pid
+kill proces by name: pkill -9 $name
+start process with priority: nice -n $value_from_-20_to_20 $command
+reset process priority: renice $value $pid
+
+see process args: cat /proc/$pid/cmdline
+
+Start a process in the background: cmd &
+
+Nice a program: nice -n $nice_value $command
+Check current Nice Levels: ps ax -o uname,pid,c,ni,cmd
+Renice a program: sudo (if root) renice $newlevel -p $pids
+(nice values, -20 to 19. Lower is higher priority)
+
+jobs - list the current jobs
+fg - resume the job that's next in the queue
+fg %[number] - resume job [number]
+bg - Push the next job in the queue into the background
+bg %[number] - Push the job [number] into the background
+kill %[number] - Kill the job numbered [number]
+kill -[signal] %[number] - Send the signal [signal] to job number [number]
+disown %[number] - disown the process(no more terminal will be owner), so command will be alive even after closing the terminal.
+Resume process: kill -SIGCONT <pid>
+
+rc-status
+
+=====
+Networking
+=====
+start wpa_supplicant with debug: sudo wpa_supplicant -Dnl80211 -iwlp3s0 -c/etc/wpa_supplicant/wpa_supplicant.conf -d
+start wpa_supplicant in background: sudo wpa_supplicant -Dnl80211 -iwlp3s0 -c/etc/wpa_supplicant/wpa_supplicant.conf -B
+start dhcpcd on wlan: sudo dhcpcd wlp3s0
+
+//start vpn: /etc/init.d/openvpn start
+start vpn: sudo rc-service openvpn start
+
+Scan for wireless networks: sudo iwlist wlp3s0 scanning
+    (grep the results for ease of use)
+    Now in ~/scripts/available_networks.sh
+
+Check a site's DNS records: dig $site_root and host -a $site_root
+ -> Now in ~/scripts/dns_info.sh
+
+See what process is listening on what port: netstat -tulpn
+
+
+====
+PostgreSQL
+===
+
+Do:
+    /etc/init.d/postgreslq-9.5 start
+    psql db/development_db ctc_site
+
+====
+Displays
+====
+xrandr -q to see whats connected
+sudo lspci -vk | grep -iA11 -E 'vga|hdmi' to see what is enabled
+change screen brightness: as su,
+    1-851 value where,
+    echo value > /sys/class/backlight/intel_backlight/brightness
+
+====
+Redis
+====
+start redis server: sudo /usr/local/lib/redis/redis-5.0.4/src/redis-server
+start redis cli: redis-cli
+
+====
+Docker
+====
+start docker: sudo /usr/bin/dockerd
+check containers: docker ps
+Describe container: docker inspect $container_name
+Run command in container: docker exec -it $container_name $command 
+    EG: docker exec -it b5_mysql mysql
+
+====
+File System Operations
+====
+.tar.gz = tar -zxvf [file]
+.zip = unzip [file]
+
+Set as executable script: chmod +x file.sh
+Start of script: !#/bin/bash
+
+mutli string grep: grep 'str1\|str2'
+
+Find file: find $baseDir -name $fileName
+pipe into file: $operation | tee $fileName
+
+change script to root only:
+    sudo chown root:root $file
+    sudo chmod 700 $file
+
+size by directory: du -h /home | sort -rh | less
+
+=========================
+Drive Mounting/Unmounting
+=========================
+Get drive listing and mounting info: lsblk -o +fstype,label,uuid,partuuid
+Drive info: hdparm -I /dev/sd*
+
+Mount:
+1. Get Drive info
+2. `mkdir /mnt/$drive_name`
+3. `chmod 777 /mnt/$drive_name`
+4. Edit /etc/fstab with the correct info:
+   EG: UUID=D49B-3350 /mnt/$drive_name vfat noauto,rw,user 0 0
+5. `mount /mnt/$drive_name
+
+Unmount: 
+1. `umount /mnt/$drive_name`
+2. Remove fstab entry
+3. Pull drive
+
+====
+Git
+====
+Update all submodules: git submodule update --remote
+
+===
+Vim
+===
+start spellcheck: :setlocal spell spelllang=en_us
+next highlight: ]s
+last highlight: [s
+add word to local 'good' spelllist: zg
+add word to global 'good' spelllist: zG
+suggest replacement: z=
+search: :gr! -r ....
+
+===
+Go
+==
+Local documentation: godoc -http=:5000 -index -index_files=~/projects/go/doc/index.db
+Regenerate index: godoc -https=:5000 -index -index_files=~/projects/go/doc/index.db -write_index -v
+
+====
+Programs
+====
+
+Fetch anything: wget
+Multiple Monitors: arandr and xrandr
+PDF: apvlv
+File Browser: xfe
+Image Viewer: feh
+Screenshot Capture: scrot
+Android Studio: studio.sh
+Sound: alsamixer
+cmdline Web Browser: lynx
+cmdline html viewer: w3m -dump $file.html
+set background image: nitrogen
